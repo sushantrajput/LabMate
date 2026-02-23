@@ -1,0 +1,27 @@
+name: Docker Deploy LabMate
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.HOST_DNS }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            cd ~/LabMate
+            git pull origin main
+            # Stop old containers and remove old images to save space
+            docker compose down
+            docker system prune -f
+            # Build and start the new version
+            docker compose up --build -d
