@@ -18,18 +18,21 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            # If the directory doesn't exist, clone it; otherwise, just enter it
-            if [ ! -d "~/LabMate" ]; then
-              git clone https://github.com/sushantrajput/LabMate.git ~/LabMate
+            # Fix: Use $HOME instead of ~ for the directory check
+            if [ ! -d "$HOME/LabMate" ]; then
+              git clone https://github.com/sushantrajput/LabMate.git $HOME/LabMate
             fi
             
-            cd ~/LabMate
+            cd $HOME/LabMate
             
             # Pull latest changes
             git pull origin main
             
+            # Fix: Ensure a dummy .env exists to prevent Docker Compose from crashing
+            # (You should still manually add your real keys to this file via SSH)
+            touch server/.env
+            
             # Docker commands
-            # Using 'sudo' if you haven't finished the 'usermod' step yet
             docker compose down
             docker system prune -f
             docker compose up --build -d
