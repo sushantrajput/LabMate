@@ -26,7 +26,7 @@ const Header = () => {
           <h1 className='text-4xl md:text-5xl lg:text-[3.5rem] text-white font-bold leading-tight tracking-tight text-left'>
             Compassionate Care <br />
             <span className='text-transparent bg-clip-text bg-gradient-to-r from-teal-200 to-teal-400'>
-              For A Healthier You
+              For A Healthier Version
             </span>
           </h1>
         </div>
