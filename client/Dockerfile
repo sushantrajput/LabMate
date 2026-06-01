@@ -5,7 +5,7 @@ COPY package*.json ./
 RUN npm install
 COPY . .
 
-ARG VITE_BACKEND_URL=http://localhost:5000
+ARG VITE_BACKEND_URL=http://api.labmate.me
 ENV VITE_BACKEND_URL=$VITE_BACKEND_URL
 
 RUN npm run build
